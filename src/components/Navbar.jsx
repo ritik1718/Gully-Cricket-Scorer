@@ -8,7 +8,7 @@ export default function Navbar() {
         <span className='font-bold text-xl mx-8 relative right-4'>ArrE GaZaB</span>
       </div>
       <ul className='flex gap-8 mx-7'>
-      <Link to="/">  <li className='curser-pointer hover:font-bold transition-all'>StartMatch</li></Link>
+       <li className='curser-pointer hover:font-bold transition-all'>StartMatch</li>
       <Link  to="/livematch"> <li className='curser-pointer hover:font-bold transition-all'> LiveMatch </li></Link>
       <Link to="/scorecard" > <li className='curser-pointer hover:font-bold transition-all'>   ScoreCard </li></Link>
       </ul>
