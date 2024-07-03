@@ -24,7 +24,10 @@ export default function Startmatch(props) {
     </div> 
     <button className='w-1/2  bg-slate-800 text-white rounded-lg relative left-24 p-2  font-bold text-2xl'> <Link  to="/livematch">Start The Game</Link></button>
 
-    <div className='teams w-auto my-3 rounded-md bg-slate-300'>
+    <div className='teams w-auto my-3 rounded-md bg-red-300 mx-1'>
+      <p>NOTE :- if you use no ball , wide , wickets , leg byes then ball will not count so you have to assign runs before on that ball.</p> 
+      <p>EXAMPLE 1:- wicket on 2nd ball then asiign 0 runs then click wicket  </p> 
+      <p>EXAMPLE 2:- leg byes on 3rd ball then asiign 2 runs then click leg byes</p> 
     </div>
     </>  
   )
