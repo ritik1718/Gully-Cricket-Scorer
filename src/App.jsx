@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {useState , useEffect} from 'react'
 import {
   createBrowserRouter,
-  RouterProvider, Link
+  RouterProvider, Link , Navigate
 } from "react-router-dom";
 
 function App() {
@@ -68,6 +68,8 @@ function App() {
  const [netrunrate, setNetrunrate] = useState()
  const [inning, setInning] = useState("1st INNING")
  const [inningtf, setInningtf] = useState(true)
+ const [hide, setHide] = useState("")
+ const [textcolor, setTextcolor] = useState("")
 
  const secondinning =()=>{
   setInning("2nd INNING") ; setInningtf(false)
@@ -120,7 +122,44 @@ function App() {
    setNetrunrate()
   }
 
-useEffect( ()=>{ if(over!==0) {setNetrunrate(totalruns/over)}} , [balls])
+useEffect( ()=>{ if(over!==0) {setNetrunrate(totalruns/over)}} , [balls]) 
+/*useEffect( ()=>{ if(netrunrate>=10) {setTextcolor("text-green-800")} }, [balls]  );
+useEffect( ()=>{ if(10>netrunrate>=8) {setTextcolor("text-green-300")}  } ,[balls]  )
+useEffect( ()=>{ if(8>netrunrate>=6) {setTextcolor("text-yellow-500")} } ,[balls])
+useEffect( ()=>{ if(6>netrunrate>=4) {setTextcolor("text-orange-500") } } ,[balls])
+              /* else if(10>netrunrate>=8) {setTextcolor("text-green-300")}
+               
+               else }
+               else if(4>netrunrate>=2) {setTextcolor("text-red-300")}
+               else if(2>netrunrate>=0) {setTextcolor("text-red-500")}
+               } , [balls])*/
+               useEffect(() => {
+                let colorClass = 'text-black';
+                switch (true) {
+                  case (netrunrate > 10.00):
+                    colorClass = 'text-blue-500';
+                    break; 
+                  case (netrunrate > 8.00):
+                    colorClass = 'text-green-500';
+                    break;
+                  case (netrunrate > 6.00):
+                    colorClass = 'text-yellow-500';
+                    break;
+                  case (netrunrate > 4.00):
+                      colorClass = 'text-orange-500';
+                      break; 
+                  case (netrunrate > 2.00):
+                    colorClass = 'text-red-500';
+                    break;
+                  case (netrunrate > 0.00):
+                    colorClass = 'text-red-800';
+                    break;
+                  default:
+                    colorClass = 'text-black';
+                }
+                setTextcolor(colorClass);
+              });
+
 
 useEffect(() => {
   if( balls === 0){setOverballs(0); setOver(0)}
@@ -146,7 +185,8 @@ useEffect(() => {
 
  useEffect(() => {  if(bowlerballs===6 && bowlerballs!==0 && inningtf===true){setBowlerhist([...bowlerhist , {name:bowl, maiden:bowlermaiden , runs:(bowlerruns + history[history.length-1])  , wickets:bowlerwickets, balls:bowlerballs}]) 
 
-  setBowlerchange(<div className='bg-blue-300 my-3 justify-center w-3/4'><h1 className='font-bold'>Add New Bowler</h1> <input type='text' className='w-3/4' onChange={change6}></input><button className='bg-slate-800 text-white rounded-md hover-bold' onClick={changebowler}>Add</button></div>) ; setNewplayertf([...newplayertf , true])}
+  setBowlerchange(<div className='bg-blue-300 my-3 justify-center w-3/4'><h1 className='font-bold'>Add New Bowler</h1> <input type='text' className='w-3/4' onChange={change6}></input><button className='bg-slate-800 text-white rounded-md hover-bold' onClick={changebowler}>Add</button></div>) ; setHide("hidden") ; setNewplayertf([...newplayertf , true])}
+  
 
   if(bowlerballs===6 && bowlerballs!==0 && inningtf===false){setBowlerhist2nd([...bowlerhist2nd , {name:bowl, maiden:bowlermaiden , runs:(bowlerruns + history[history.length-1])  , wickets:bowlerwickets, balls:bowlerballs}]) 
   
@@ -388,9 +428,12 @@ const wicket =()=>{ setStorage([...storage , true])
 
          setbowlerwickets(bowlerwickets + 1)
          if(swaptf===true){
-         setBat1change(<div className='bg-blue-300 my-3 justify-center w-3/4'><h1 className='font-bold'>Add New BatsMan</h1> <input type='text' className='w-3/4' onChange={change4}></input><button className='bg-slate-800 text-white rounded-md hover-bold' onClick={changebat1}>Add</button></div>)}
+         setBat1change(<div className='bg-blue-300 my-3 justify-center w-3/4'><h1 className='font-bold'>Add New BatsMan</h1> <input type='text' className='w-3/4' onChange={change4}></input><button className='bg-slate-800 text-white rounded-md hover-bold' onClick={changebat1}>Add</button></div>)
+         setHide("hidden");}
+         
          else{
-         setBat2change(<div className='bg-blue-300 my-3 justify-center w-3/4'><h1 className='font-bold'>Add New BatsMan</h1> <input type='text' className='w-3/4' onChange={change5}></input><button className='bg-slate-800 text-white rounded-md hover-bold' onClick={changebat2}>Add</button></div>)}
+         setBat2change(<div className='bg-blue-300 my-3 justify-center w-3/4'><h1 className='font-bold'>Add New BatsMan</h1> <input type='text' className='w-3/4' onChange={change5}></input><button className='bg-slate-800 text-white rounded-md hover-bold' onClick={changebat2}>Add</button></div>)
+         setHide("hidden");}
 }
 
 const undo = ()=>{  if(newplayertf[newplayertf.length-1] === true){alert('if you have to remove new player :- give him wicket with 0 runs or 6 zero balls and delete from scorecard') ; setNewplayertf([newplayertf[newplayertf.length-1]])}
@@ -442,9 +485,9 @@ const undo = ()=>{  if(newplayertf[newplayertf.length-1] === true){alert('if you
     const change4 = (e)=>{setBat1(e.target.value)}
     const change5 = (e)=>{setBat2(e.target.value)}
     const change6 = (e)=>{setBowl(e.target.value)}
-    const changebowler = ()=>{setBowlerchange() ; setBowlerballs(0) ; setBowlermaiden(0) ; setBowlerruns(0) ; setbowlerwickets(0) ; setDivs([])}
-    const changebat1 =()=>{setPlayer1balls(0) ; setPlayer1fours(0) ; setPlayer1runs(0) ; setPlayer1sixs(0) ; setPlayer1sr(0) ; setBat1change()}
-    const changebat2 =()=>{setPlayer2balls(0) ; setPlayer2fours(0) ; setPlayer2runs(0) ; setPlayer2sixs(0) ; setPlayer2sr(0); setBat2change()}
+    const changebowler = ()=>{setBowlerchange() ; setBowlerballs(0) ; setBowlermaiden(0) ; setBowlerruns(0) ; setbowlerwickets(0) ; setDivs([]) ; setHide("")}
+    const changebat1 =()=>{setPlayer1balls(0) ; setPlayer1fours(0) ; setPlayer1runs(0) ; setPlayer1sixs(0) ; setPlayer1sr(0) ; setBat1change()  ; setHide("")}
+    const changebat2 =()=>{setPlayer2balls(0) ; setPlayer2fours(0) ; setPlayer2runs(0) ; setPlayer2sixs(0) ; setPlayer2sr(0); setBat2change() ; ; setHide("")}
   
     const router = createBrowserRouter([
       {
@@ -452,10 +495,10 @@ const undo = ()=>{  if(newplayertf[newplayertf.length-1] === true){alert('if you
         element:<><Navbar/> <Startmatch batteam={batteam} change1={change1} change2={change2} change3={change3} change4={change4} change5={change5} change6={change6}  /></>
       },
 
-      { path: "/livematch" , element: <><Navbar/>   <MainScore inning={inning} netrunrate={netrunrate} batteam={batteam} bowlteam={bowlteam} finover={finover} totalruns = {totalruns} balls={balls} wickets={wickets[wickets.length - 1]} over={over} overballs={overballs}/>
+      { path: "/livematch" , element: <><Navbar/>   <MainScore textcolor={textcolor} inning={inning} netrunrate={netrunrate} batteam={batteam} bowlteam={bowlteam} finover={finover} totalruns = {totalruns} balls={balls} wickets={wickets[wickets.length - 1]} over={over} overballs={overballs}/>
         <Score bat1={bat1} bat2={bat2} bowl={bowl} player1runs={player1runs} player2runs={player2runs} player1balls={player1balls} player2balls={player2balls} player1fours={player1fours} player2fours={player2fours} player1sixs={player1sixs} player2sixs={player2sixs} player1sr={player1sr} player2sr={player2sr} whitebg1={whitebg1} whitebg2={whitebg2} bowlerruns={bowlerruns} bowlerwickets={bowlerwickets}  bowlermaiden={bowlermaiden} bowlerballs={bowlerballs}/>
-        <ThisOver  divs={divs} wide={wide} noball={noball} legbyes={legbyes} wicket={wicket} tick1={tick1}  tick2 = {tick2} tick3={tick3} tick4={tick4}  /> 
-        <Buttons zero={zero}  one={one}  two={two}  three={three}  four={four}  five={five}  six={six} balls={balls} undo={undo} swap={swap} bowlerchange={bowlerchange} bat1change={bat1change} bat2change={bat2change} secondinning={secondinning} /> 
+        <ThisOver hide={hide} divs={divs} wide={wide} noball={noball} legbyes={legbyes} wicket={wicket} tick1={tick1}  tick2 = {tick2} tick3={tick3} tick4={tick4}  /> 
+        <Buttons zero={zero}  one={one}  two={two}  three={three}  four={four}  five={five}  six={six} balls={balls} undo={undo} swap={swap} bowlerchange={bowlerchange} bat1change={bat1change} bat2change={bat2change} secondinning={secondinning} hide={hide}/> 
         </>
       },
      
@@ -464,7 +507,11 @@ const undo = ()=>{  if(newplayertf[newplayertf.length-1] === true){alert('if you
         element:<><Navbar/> <Scorecard deletelastbowler={deletelastbowler} bowlerhist={bowlerhist} bat1hist={bat1hist} bat2hist={bat2hist} deletelastbatblue={deletelastbatblue} deletelastbatwhite={deletelastbatwhite}
         
         deletelastbowler2nd={deletelastbowler2nd} bowlerhist2nd={bowlerhist2nd} bat1hist2nd={bat1hist2nd} bat2hist2nd={bat2hist2nd} deletelastbatblue2nd={deletelastbatblue2nd} deletelastbatwhite2nd={deletelastbatwhite2nd}/></>
-      } 
+      }, 
+      {
+        path: '*',
+        element: <Navigate to="/" replace />,
+      }
     ])
 
   return (
