@@ -176,7 +176,7 @@ useEffect(() => {
 
  useEffect(() => {  if(bowlerballs===6 && bowlerballs!==0 && inningtf===true){setBowlerhist([...bowlerhist , {name:bowl, maiden:bowlermaiden , runs:(bowlerruns + history[history.length-1])  , wickets:bowlerwickets, balls:bowlerballs}]) 
 
-  setBowlerchange(<div className='bg-blue-300 my-3 justify-center w-3/4'><h1 className='font-bold'>Add New Bowler</h1> <input type='text' className='w-3/4' onChange={change6}></input><button className='bg-slate-800 text-white rounded-md hover-bold' onClick={changebowler}>Add</button></div>) ; setHide("hidden") ; setNewplayertf([...newplayertf , true])}
+  setBowlerchange(<div className='bg-red-500 my-3 justify-center w-3/4'><h1 className='font-bold'>Add New Bowler</h1> <input type='text' className='w-3/4' onChange={change6}></input><button className='bg-slate-800 text-white rounded-md hover-bold' onClick={changebowler}>Add</button></div>) ; setHide("hidden") ; setNewplayertf([...newplayertf , true])}
   
 
   if(bowlerballs===6 && bowlerballs!==0 && inningtf===false){setBowlerhist2nd([...bowlerhist2nd , {name:bowl, maiden:bowlermaiden , runs:(bowlerruns + history[history.length-1])  , wickets:bowlerwickets, balls:bowlerballs}]) 
