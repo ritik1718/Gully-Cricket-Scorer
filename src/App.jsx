@@ -122,17 +122,8 @@ function App() {
    setNetrunrate()
   }
 
-useEffect( ()=>{ if(over!==0) {setNetrunrate(totalruns/over)}} , [balls]) 
-/*useEffect( ()=>{ if(netrunrate>=10) {setTextcolor("text-green-800")} }, [balls]  );
-useEffect( ()=>{ if(10>netrunrate>=8) {setTextcolor("text-green-300")}  } ,[balls]  )
-useEffect( ()=>{ if(8>netrunrate>=6) {setTextcolor("text-yellow-500")} } ,[balls])
-useEffect( ()=>{ if(6>netrunrate>=4) {setTextcolor("text-orange-500") } } ,[balls])
-              /* else if(10>netrunrate>=8) {setTextcolor("text-green-300")}
-               
-               else }
-               else if(4>netrunrate>=2) {setTextcolor("text-red-300")}
-               else if(2>netrunrate>=0) {setTextcolor("text-red-500")}
-               } , [balls])*/
+useEffect( ()=>{ if(over!==0) {setNetrunrate((totalruns/balls)*6)}} , [balls]) 
+
                useEffect(() => {
                 let colorClass = 'text-black';
                 switch (true) {
