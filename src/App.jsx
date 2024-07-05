@@ -65,7 +65,7 @@ function App() {
  const [bat1change, setBat1change] = useState()
  const [bat2change, setBat2change] = useState()
  const [newplayertf, setNewplayertf] = useState([false])
- const [netrunrate, setNetrunrate] = useState()
+ const [netrunrate, setNetrunrate] = useState(0)
  const [inning, setInning] = useState("1st INNING")
  const [inningtf, setInningtf] = useState(true)
  const [hide, setHide] = useState("")
@@ -122,7 +122,7 @@ function App() {
    setNetrunrate()
   }
 
-useEffect( ()=>{ if(over!==0) {setNetrunrate((totalruns/balls)*6)}} , [balls]) 
+useEffect( ()=>{ if(balls!==0) {setNetrunrate((totalruns/balls)*6)}} ) 
 
                useEffect(() => {
                 let colorClass = 'text-black';
